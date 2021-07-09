@@ -1,4 +1,5 @@
 <template>
+<div>
   <div>
       <h2 style="color:black">Player Page</h2>
       <div id="playerDiv"> 
@@ -12,13 +13,16 @@
       <p>Birth Place: {{this.player.birthcountry}}</p>
       <p>Height: {{this.player.height}}</p>
       <p v-if="this.player.weight">Weight: {{this.player.weight}}</p>
-      </div>
-  </div>
+   <FavoritePlayerButton v-if="$root.store.username" :id="this.player.player_id" ></FavoritePlayerButton>
+         </div>
+
+</div>
 </template>
 
 <script>
+import FavoritePlayerButton from '../components/FavoritePlayerButton.vue';
 export default {
-    
+      components: { FavoritePlayerButton},
     data(){
         return{player:undefined }
     },

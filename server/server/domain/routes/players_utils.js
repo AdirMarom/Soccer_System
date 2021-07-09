@@ -149,6 +149,29 @@ function extractRelevantPlayerData(players_info) {
     };
   });
 }
+
+
+function extractRelevantSinglePlayerData(player_info) {
+  
+    console.log(player_info);
+    const { fullname, image_path, position_id,player_id,common_name,nationality,birthdate,birthcountry,height,weight } = player_info.data.data;
+    const { id, name } = player_info.data.data.team.data;
+    return {
+      team_id:id,
+      team_name:name,
+      image_path: image_path,
+      position_id: position_id,
+      common_name:common_name,
+      nationality:nationality,
+      birthdate:birthdate,
+      birthcountry:birthcountry,
+      height:height,
+      weight:weight,
+      fullname: fullname,
+      player_id: player_id,
+    };
+
+}
 //function extractRelevantPlayerData(players_info) {
 
  // const details=players_info.data.data;
@@ -208,7 +231,7 @@ async function getPlayersInfoBySingleID(players_id) {
         include: "team",
       },
     });
-    return extractRelevantPlayerData(res);
+    return extractRelevantSinglePlayerData(res);
   }
   catch(e){
     console.log(e);

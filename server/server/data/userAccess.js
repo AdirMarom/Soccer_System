@@ -46,7 +46,7 @@ async function insertFavoritePlayers(user_id,player_id){
 
 async function insertfavoriteMatches( user_id, match_id){
     await DButils.execQuery(
-        `insert into dbo.FavoriteMatches
+        `INSERT INTO dbo.FavoriteMatches (user_id, match_id)
          values ('${user_id}',${match_id})`
       );
   }

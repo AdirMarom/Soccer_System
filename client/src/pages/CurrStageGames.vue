@@ -14,7 +14,7 @@
                     :hour="game.time" 
                     :stadium="game.stadium" >
                     </GamePreview> 
-                    <FavoriteFutureGameButton :id="game.ID" ></FavoriteFutureGameButton>
+                    <FavoriteFutureGameButton v-if="$root.store.username" :id="game.ID" ></FavoriteFutureGameButton>
                 </div>
                 </div>
           </div>
@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style>
-#card {
+.card {
   display: inline-block;
   width: 250px;
   height: 300px;

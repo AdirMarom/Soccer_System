@@ -7,6 +7,7 @@
       :hostTeam="g.homeTeam"
       :guestTeam="g.awayTeam"
       :date="g.date"
+
       :hour="g.time"
       :key="g.ID"
     ></GamePreview>
