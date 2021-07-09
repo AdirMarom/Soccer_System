@@ -1,7 +1,5 @@
 <template>
   <div>
-    <teamPreview key="team.id" v-if="this.team" :team="this.team"></teamPreview>
-
     <h1 class="title">Search Page</h1>
     <b-input-group prepend="Search Player/Team:" id="search-input">
       <b-form-input v-model="searchQuery"></b-form-input>
@@ -9,12 +7,12 @@
         <b-button variant="success" @click="search">Search</b-button>
         <div>
           <b-dropdown text="Click To Sort">
-            <b-dropdown-item href="#"> Ascending Teams Names </b-dropdown-item>
-            <b-dropdown-item href="#"> Descending Teams Names </b-dropdown-item>
-            <b-dropdown-item @click="sortDescending">
+            <b-dropdown-item @click="sortDescendingTeams(true)" > Ascending Teams Names </b-dropdown-item>
+            <b-dropdown-item @click="sortDescendingTeams(false)"> Descending Teams Names </b-dropdown-item>
+            <b-dropdown-item @click="sortDescendingPlayers(true)">
               Ascending Players Names
             </b-dropdown-item>
-            <b-dropdown-item @click="AscendingDescending">
+            <b-dropdown-item @click="sortDescendingPlayers(false)">
               Descending Players Names
             </b-dropdown-item>
           </b-dropdown>
@@ -30,7 +28,13 @@
         :player="player"
       ></playerInfo>
     </div>
-    <teamPreview key="team.id" v-if="this.team" :team="this.team"></teamPreview>
+     <div v-if="teams">
+      <teamPreview
+        v-for="team in this.teams"
+        :key="team.id"
+        :team="team"
+      ></teamPreview>
+    </div>
   </div>
 </template>
 
@@ -47,7 +51,7 @@ export default {
     return {
       searchQuery: "",
       players: null,
-      team: null,
+      teams: null,
     };
   },
   methods: {
@@ -59,17 +63,18 @@ export default {
         if (res.status == 200) {
           if (res.data != []) {
             console.log(res);
-            this.team = res.data.team.data[0];
+            this.teams = res.data.team.data;
           }
         }
       }
     },
 
-    sortDescending() {
+    sortDescendingPlayers( bool ) {
       if (!this.players) {
         return;
       }
-      const sorted_players = this.players.sort(function (player1, player2) {
+      if (bool){
+        const sorted_players = this.players.sort(function (player1, player2) {
         if (player2.lastname < player1.lastname) {
           return -1;
         }
@@ -79,21 +84,49 @@ export default {
         return 0;
       });
       this.players = sorted_players;
+      }
+      else{
+        const sorted_players = this.players.sort(function (player1, player2) {
+        if (player2.lastname < player1.lastname) {
+          return 1;
+        }
+        if (player2.lastname > player1.lastname) {
+          return -1;
+        }
+        return 0;
+      });
+      this.players = sorted_players;
+      }
     },
-    sortAscending() {
-      if (!this.players) {
+
+    sortDescendingTeams( bool ) {
+      if ( !this.teams ) {
         return;
       }
-      const sorted_players = this.players.sort(function (player1, player2) {
-        if (player2.lastname > player1.lastname) {
+      if (bool){
+        const sorted_teams = this.teams.sort(function (team1, team2) {
+        if (team2.name < team1.name) {
           return -1;
         }
-        if (player2.lastname < player1.lastname) {
+        if (team2.name > team1.name) {
           return 1;
         }
         return 0;
       });
-      this.players = sorted_players;
+      this.teams = sorted_teams;
+      }
+      else{
+        const sorted_teams = this.teams.sort(function (team1, team2) {
+        if (team2.name < team1.name) {
+          return 1;
+        }
+        if (team2.name > team1.name) {
+          return -1;
+        }
+        return 0;
+      });
+      this.teams = sorted_teams;
+      }
     },
 
     async searchPlayers() {
@@ -110,7 +143,7 @@ export default {
     },
 
     async search() {
-      this.team = null;
+      this.teams = null;
       await this.searchTeam();
       await this.searchPlayers();
     },
