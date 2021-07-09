@@ -1,6 +1,6 @@
 <template>
   <div>
-        <b-button style="margin-left: 1%; margin-top:0.5%;margin-bottom:0.5%" variant="outline-primary" @click="addGame">Add To Favorites </b-button>
+        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" @click="addGame">Add To Favorites </button>
         <b-alert v-if="addFlag" show dismissible>Game was successfully added!</b-alert>
   </div>
 </template>
