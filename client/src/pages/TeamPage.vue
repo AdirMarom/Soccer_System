@@ -83,7 +83,8 @@ export default {
     methods:{
         async TeamDetails(){
             const response=await this.axios.get(`http://localhost:3000/teams/teamFullDetails/${this.$route.params.team_name}`);
-            this.players= response.data;
+            if(response.status==200)
+                this.players= response.data;
         },
 
        async future_matches(){
