@@ -2,7 +2,6 @@
   <div>
     <GamePreview
       v-for="g in games"
-      :date="g.date" 
       :id="g.ID"
       :hostTeam="g.homeTeam"
       :guestTeam="g.awayTeam"
