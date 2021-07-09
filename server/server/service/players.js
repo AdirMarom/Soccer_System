@@ -35,6 +35,7 @@ router.get("/playersDetails/:playerName", async (req, res, next) => {
   router.get("/playersDetailsById/:playerID", async (req, res, next) => {
     
     try {
+      console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
     const id = req.params.playerID;
     const player = await  players_utils.getPlayersInfoBySingleID( id );
     res.status(200).send(player);
