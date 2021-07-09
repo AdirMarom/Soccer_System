@@ -5,18 +5,22 @@
           <div  id="futureGames" v-if="futureGames">
                 <h3>Future Games</h3>
                 <div>
-                    
-                    <GamePreview v-for="game in this.futureGames" :key="game.id"
+                <div v-for="game in this.futureGames" :class="card" :key="game.id">
+                    <GamePreview 
                     :id="game.ID" 
                     :hostTeam="game.homeTeam" 
                     :guestTeam="game.awayTeam" 
                     :date="game.date"
                     :hour="game.time" 
-                    :stadium="game.stadium" ></GamePreview> 
+                    :stadium="game.stadium" >
+                    </GamePreview> 
+                    <FavoriteFutureGameButton :id="game.ID" ></FavoriteFutureGameButton>
+                </div>
                 </div>
           </div>
 
       </div>
+
 
     <div id="past"> 
           <div  id="pastGames" v-if="pastGames">
@@ -32,6 +36,7 @@
                     :homeScore="game.scoreHome"
                     :awayScore="game.scoreAway"
                     :events="game.events"></GamePreview> 
+
                 </div>
           </div>
 
@@ -43,15 +48,18 @@
 
 import moment from 'moment';
 import GamePreview from "../components/GamePreview.vue";
+import FavoriteFutureGameButton from '../components/FavoriteFutureGameButton.vue';
+
 export default {
-  components: { GamePreview },
+  components: { GamePreview, FavoriteFutureGameButton },
     
     data(){
 
 
         return{
-             futureGames:[],
-             pastGames:[],
+            user:false,
+            futureGames:[],
+            pastGames:[],
         }
     },
     mounted(){
@@ -72,10 +80,12 @@ export default {
       },
 
         async future_matches(){
+            
             const response=await this.axios.get(
                 `http://localhost:3000/matches/getAllFutureGames`);
             if(response){
                 this.futureGames = response.data;
+
 
             }
                 
@@ -93,3 +103,18 @@ export default {
     }
 }
 </script>
+
+<style>
+#card {
+  display: inline-block;
+  width: 250px;
+  height: 300px;
+  position: relative;
+  margin: 10px 10px;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 5px;
+  border-color:cadetblue;
+}
+
+</style>
