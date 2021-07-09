@@ -2,10 +2,12 @@
   <div>
     <GamePreview
       v-for="g in games"
-      :id="g.ID" 
-      :hostTeam="g.homeTeam" 
-      :guestTeam="g.awayTeam" 
       :date="g.date" 
+      :id="g.ID"
+      :hostTeam="g.homeTeam"
+      :guestTeam="g.awayTeam"
+      :date="g.date"
+
       :hour="g.time"
       :key="g.ID"
     ></GamePreview>
@@ -17,14 +19,13 @@ import GamePreview from "../components/GamePreview.vue";
 export default {
   name: "FavoriteGames",
   components: {
-    GamePreview
-  }, 
+    GamePreview,
+  },
   data() {
-
     return {
-
       //games: this.axios.get("http://localhost:3000/matches/favoriteMatches")
-      games: []
+      allMyGames: [],
+      games: [],
       //  {
       //    id:25,
       //    hostTeam: "Maccabi Tel-Aviv",
@@ -39,39 +40,21 @@ export default {
       //    date: "29/5/21",
       //    hour: "20:00"
       //  }
-      
     };
   },
-   methods: {
-     async updateGames(){
-       console.log("response");
-       try {
-         const response = await this.axios.get(
-           "http://localhost:3000/matches/favoriteMatches",
-         );
-         console.log(response.data);
-         const games = response.data.games;
-         this.games = [];
-         this.games.push(...games);
-         console.log(response);
-       } catch (error) {
-         console.log("error in update games")
-         console.log(error);
-       }
-     },
-     async setGames(){
-      const response = await this.axios.get(
-           "http://localhost:3000/matches/favoriteMatches");
-    if (response.status == 200){
-      this.games = response.data.slice(0,2);
-    }
-   },
-   },
-   mounted(){
-
-     this.setGames();
-   }
-   
+  methods: {
+    async setGames() {
+      const response1 = await this.axios.get(
+        "http://localhost:3000/matches/favoriteFutureMatches"
+      );
+      if (response1.status == 200) {
+        this.games = response1.data;
+      }
+    },
+  },
+  mounted() {
+    this.setGames();
+  },
 };
 </script>
 
