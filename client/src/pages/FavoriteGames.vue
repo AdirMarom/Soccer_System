@@ -7,7 +7,7 @@
       :guestTeam="g.awayTeam" 
       :date="g.date" 
       :hour="g.time" 
-      :key="g.id"></GamePreview>
+      :key="g.ID"></GamePreview>
   </div>
 </template>
 
@@ -23,22 +23,22 @@ export default {
     return {
 
       //games: this.axios.get("http://localhost:3000/matches/favoriteMatches")
-      games: [],
-       // {
-       //   id:25,
-       //   hostTeam: "Maccabi Tel-Aviv",
-       //   guestTeam: "Hapoel Beer-Sheva",
-       //   date: "27/5/21",
-       //   hour: "20:00"
-       // },
-       // {
-       //   id:39,
-       //   hostTeam: "Hapoel Tel-Aviv",
-       //   guestTeam: "Maccabi Haifa",
-       //   date: "29/5/21",
-       //   hour: "20:00"
-       // }
-
+      games: []
+      //  {
+      //    id:25,
+      //    hostTeam: "Maccabi Tel-Aviv",
+      //    guestTeam: "Hapoel Beer-Sheva",
+      //    date: "27/5/21",
+      //    hour: "20:00"
+      //  },
+      //  {
+      //    id:39,
+      //    hostTeam: "Hapoel Tel-Aviv",
+      //    guestTeam: "Maccabi Haifa",
+      //    date: "29/5/21",
+      //    hour: "20:00"
+      //  }
+      
     };
   },
    methods: {
@@ -57,16 +57,20 @@ export default {
          console.log("error in update games")
          console.log(error);
        }
-     }
-   }, 
-   async mounted(){
-      const response= await this.axios.get("http://localhost:3000/matches/favoriteMatches")
-      if(response.status==200)
-        this.games=response.data;
-     console.log("favorite games mounted");
-     console.log("favorite games mounted");
-     //this.updateGames(); 
+     },
+     async setGames(){
+      const response = await this.axios.get(
+           "http://localhost:3000/matches/favoriteMatches");
+    if (response.status == 200){
+      this.games = response.data.slice(0,2);
+    }
+   },
+   },
+   mounted(){
+
+     this.setGames();
    }
+   
 };
 </script>
 
