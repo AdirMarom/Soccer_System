@@ -12,6 +12,7 @@
       <li v-if="homeScore"> homeScore: {{ hour }}</li>
       <li v-if="awayScore"> awayScore: {{ awayScore }}</li>
       <li v-if="events"> events: {{ events }}</li>
+      
     </ul>
   </div>
 </template>

@@ -55,7 +55,7 @@ router.get("/favoritePlayers", async (req, res, next) => {
 
 
 
-router.post("/favoriteMatchs", async (req, res, next) => {
+router.post("/addfavoriteMatchs", async (req, res, next) => {
   try {
     const user_id = req.session.user_id;
     const match_id = req.body.match_id;
