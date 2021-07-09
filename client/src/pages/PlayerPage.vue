@@ -4,7 +4,7 @@
       <div id="playerDiv"> 
       <p > Full Name: {{this.player.full_name}}</p>
       <p>Team Name: {{this.player.team_name}}</p>
-      <img :src="this.player.pic" height="300" width="300" >
+      <img :src="this.player.image_path" height="300" width="300" >
       <p>Position: {{this.player.position_number}}</p>
       <p >Common Name: {{this.player.common_name}}</p>
       <p>Nationality: {{this.player.nationality}}</p>

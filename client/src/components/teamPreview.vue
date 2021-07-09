@@ -1,7 +1,7 @@
 <template>
   <div class="team-info">
-    <div title="id" class="team-title"><b>Team Name:</b> {{ team_name }}</div>
-    <img :src="image" alt="player" width="50" height="50" />
+    <div  @click="this.moveToTeamPage" title="id" class="team-title"><b>Team Name:</b> {{ team_name }}</div>
+    <img  @click="this.moveToTeamPage" :src="image" alt="player" width="50" height="50" />
   </div>
 </template>
 
@@ -37,6 +37,17 @@ export default {
     this.image = this.team.logo_path;
     console.log("team preview mounted");
   },
+  methods:{
+     moveToTeamPage(){
+       this.$router.push({name:"Team",params:{team_name:this.team_name}});
+
+    },
+
+  } ,
+
+
+
+
 };
 </script>
 

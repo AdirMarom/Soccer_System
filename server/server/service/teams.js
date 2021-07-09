@@ -55,11 +55,42 @@ router.get("/teamFullDetails/:teamName", async (req, res, next) => {
 
   try {
   
-    const teamName = req.params.teamName;
+    const teamName = req.params.teamName;    
+
     teamDetails = await getTeamByName(teamName);
+
     teamId=teamDetails.data[0].id;
-    team_players = await players_utils.getPlayersByTeam(teamId);
-    console.log(team_players)
+    const team_players = await players_utils.getPlayersByTeam(teamId);
+   // console.log(team_players);
+
+
+
+
+
+    //team_players = await players_utils.getPlayersByTeam(teamId);
+   // console.log(team_players)
+    res.send(team_players);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/teamFullDetailsbyID/:teamId", async (req, res, next) => {
+  //const sorted = req.body.sorted;
+  //const filter = req.body.filter;
+  let team_details = [];
+  try {
+  
+    const teamId = req.params.teamId;
+   // const team_coach = await coach_utils.getCoachbyTeamId(teamId);
+    const team_players = await players_utils.getPlayersByTeam(teamId);
+
+   // if (sorted)
+  //    team_players = sortPlayers(team_players);
+    //this function sort the players
+    
+
+    //we should keep implementing team page.....
     res.send(team_players);
   } catch (error) {
     next(error);
