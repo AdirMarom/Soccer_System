@@ -1,24 +1,23 @@
 <template>
-  <div class="mainDiv">
-    <div class="left_container">
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <LeagueInfo></LeagueInfo>
-    </div>
-    <br />
-    <br />
-    <img src='../../resource/SuperLiga.png' height="80" width="250">
 
+<div>
 
-    <div class="right_container">
-      <br />
-      <LoginPage v-if="!$root.store.username"></LoginPage>
-      <FavoriteGames v-else :isMain="true"></FavoriteGames>
-    </div>
-  </div>
+      <b-container>
+                <h2 id="mainTitle">SUPERLIGA</h2>
+        <b-row>
+            <b-col>
+                    <LeagueInfo></LeagueInfo>
+            </b-col>
+            <b-col>
+                    <h2 class="title">My Favorite Games</h2>
+                    <LoginPage v-if="!$root.store.username"></LoginPage>
+                    <FavoriteGames v-else :isMain="true"></FavoriteGames>
+            </b-col>
+        </b-row>
+
+      </b-container>
+
+</div>
 </template>
 
 <script>
@@ -35,7 +34,18 @@ export default {
 };
 </script>
 
-<style >
+<style>
+#mainTitle{
+    font-family: 'Zen Tokyo Zoo', cursive;
+    font-size: 100px;
+    text-align: center;
+    color: cornsilk;
+}
+@import url('https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&display=swap');
+.title{
+  font-family: 'Zen Tokyo Zoo', cursive;
+  font-size: 50px;
+}
 .mainDiv {
   height: 100%;
   width: 100%;
@@ -64,5 +74,10 @@ export default {
 .leagueName {
   color: rgb(255, 255, 255);
   text-decoration: underline;
+}
+
+.title{
+  text-align: center;
+  color:whitesmoke;
 }
 </style>

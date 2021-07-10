@@ -43,7 +43,7 @@ export default {
     */
     return {
       full_name: this.player.fullname,
-      team_name: this.player.team.data.name,
+      team_name: this.player.team_name,
       image: this.player.image_path,
       Position: this.player.position_id,
     };

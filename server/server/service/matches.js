@@ -227,35 +227,26 @@ router.get("/pastSeasonGames/:teamName", async (req, res, next) => {
 
   try {
     const teamName = req.params.teamName;
-    const matches = await matches_utils.getPastGames(teamName);
+    const matches = await matches_utils.getPastGames();
+    console.log(matches);
+    past_game=[];
+    for(let i=0 ; i<matches.length ;i++){
+      if(matches[i].homeTeam==teamName ||matches[i].awayTeam==teamName)
+        past_game.push(matches[i]);
+    }
+    console.log(past_game);
     if (!teamName || teamName === ":") {
-      //     console.log("i am in the if in the pastSeasonGames :");
       res.status(400).send("no arguments given");
     }
     else
-      res.status(200).send(matches);
+      res.status(200).send(past_game);
 
   } catch (error) {
     next(error);
   }
+
 });
 
-router.get("/futureSeasonGames/:teamName", async (req, res, next) => {
-
-  try {
-    const teamName = req.params.teamName;
-    const matches = await matches_utils.getFutureGames(teamName);
-    if (!teamName || teamName === ":") {
-      //     console.log("i am in the if in the pastSeasonGames :");
-      res.status(400).send("no arguments given");
-    }
-    else
-      res.status(200).send(matches);
-
-  } catch (error) {
-    next(error);
-  }
-});
 
 
 router.put("/updateScore", async (req, res, next) => {
@@ -290,8 +281,17 @@ router.get("/futureSeasonGames/:teamName", async (req, res, next) => {
 
   try {
     const teamName = req.params.teamName;
-    const matches = await matches_utils.getFutureGames(teamName);
-    res.status(200).send(matches);
+    const matches = await matches_utils.getAllFutureGames();
+    future_game=[];
+    for(let i=0 ; i<matches.length ;i++){
+      if(matches[i].homeTeam==teamName ||matches[i].awayTeam==teamName)
+      future_game.push(matches[i]);
+    }
+    if (!teamName || teamName === ":") {
+      res.status(400).send("no arguments given");
+    }
+    else
+      res.status(200).send(future_game);
 
   } catch (error) {
     next(error);
@@ -331,7 +331,6 @@ router.get("/getAllFutureGames", async (req, res, next) => {
 
   try {
     const matches = await matches_utils.getAllFutureGames();
-    console.log(matches)
     res.status(200).send(matches);
 
   } catch (error) {
