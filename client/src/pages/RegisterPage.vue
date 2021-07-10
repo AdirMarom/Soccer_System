@@ -7,6 +7,7 @@
         label-cols-sm="3"
         label="Username:"
         label-for="username"
+        style="color:white"
       >
         <b-form-input
           id="username"
@@ -29,6 +30,7 @@
 
 
       <b-form-group
+        style="color:white"
         id="input-group-firstName"
         label-cols-sm="3"
         label="firstName:"
@@ -51,6 +53,7 @@
 
 
       <b-form-group
+        style="color:white"
         id="input-group-lastName"
         label-cols-sm="3"
         label="lastName:"
@@ -75,6 +78,7 @@
 
 
     <b-form-group
+        style="color:white"
         id="input-group-email"
         label-cols-sm="3"
         label="email:"
@@ -99,6 +103,7 @@
 
 
     <b-form-group
+        style="color:white"
         id="input-group-image_url"
         label-cols-sm="3"
         label="image_url:"
@@ -123,6 +128,7 @@
 
 
       <b-form-group
+      style="color:white"
         id="input-group-country"
         label-cols-sm="3"
         label="Country:"
@@ -142,6 +148,7 @@
 
 
       <b-form-group
+      style="color:white"
         id="input-group-Password"
         label-cols-sm="3"
         label="Password:"
@@ -168,6 +175,7 @@
       </b-form-group>
 
       <b-form-group
+      style="color:white"
         id="input-group-confirmedPassword"
         label-cols-sm="3"
         label="Confirm Password:"

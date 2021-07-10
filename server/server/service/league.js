@@ -28,7 +28,19 @@ router.get("/getDetailsPage", async (req, res, next) => {
       name: name,
       season: season,
       season_id: season_id,
-      current_stage_id: current_stage_id
+      current_stage_id: current_stage_id,
+      closetGame: {
+        "ID": "1111116",
+        "awayTeam": "Randers",
+        "date": "22-08-2021",
+        "events": null,
+        "homeTeam": "Nordsjælland",
+        "referee": "Heldermartinez1",
+        "scoreAway": null,
+        "scoreHome": null,
+        "stadium": "Right to Dream Park",
+        "time": "20:00"
+    }
     }
     console.log(result);
     res.send(result);

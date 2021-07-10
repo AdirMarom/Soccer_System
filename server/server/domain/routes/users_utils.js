@@ -38,7 +38,11 @@ async function getUserNames() {
   const user=users_access.getUserNames()
   return user;
 }
-
+async function getFavoriteTeams(user_id) {
+  const favorite_team = users_access.getFavoriteTeam(user_id)
+  return favorite_team;
+}
+exports.getFavoriteTeams=getFavoriteTeams
 exports.markTeamAsFavorite=markTeamAsFavorite;
 exports.getUserNames = getUserNames;
 exports.isUserAdmin = isUserAdmin;

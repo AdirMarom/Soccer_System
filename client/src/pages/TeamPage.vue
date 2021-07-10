@@ -4,8 +4,15 @@
                     <b-row>
                           <h2 id="mainTitle">Team Page</h2>
                     </b-row>
-                    <b-row class="title">
-                          <p>{{this.curr_team}} Team</p>
+                    <b-row>
+                        <b-col>
+                            <b-row class="title">
+                                <p>{{this.curr_team}} Team</p>
+                            </b-row>
+                        </b-col>
+                                <FavoriteTeamButton v-if="this.id" :id="this.id" ></FavoriteTeamButton>
+                        <b-col>
+                        </b-col>
                     </b-row>
                         <b-row>
                             <h2 class="title">Players</h2>
@@ -97,10 +104,11 @@
 
 import GamePreview from "../components/GamePreview.vue";
 import playerInfo from "../components/playerInfo.vue";
+import FavoriteTeamButton from "../components/FavoriteTeamButton.vue";
 import { BSpinner } from 'bootstrap-vue'
 
 export default {
-    components: { GamePreview ,playerInfo,BSpinner},
+    components: { GamePreview ,playerInfo,BSpinner,FavoriteTeamButton},
     data(){
         return{
             details:null,
@@ -110,12 +118,14 @@ export default {
             curr_team:null,
             playersLoad:false,
             futurLoad:false,
-            PastLoad:false
+            PastLoad:false,
+            id:null
         }
     },
     mounted(){
         try{
             this.curr_team=this.$route.params.team_name;
+            this.getTeamId();
             this.future_matches();
             this.past_matches();
             this.TeamDetails();
@@ -132,6 +142,13 @@ export default {
                 this.players= response.data;
             this.playersLoad=true;
         },
+
+        async getTeamId(){
+            const response=await this.axios.get(`http://localhost:3000/teams/teamByName/${this.$route.params.team_name}`);
+            if(response.status==200)
+                this.id=response.data.team.data[0].id;
+        },
+
 
        async future_matches(){
             const response=await this.axios.get(

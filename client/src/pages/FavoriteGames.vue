@@ -1,32 +1,40 @@
 <template>
   <div>
-    <div v-if="!this.load">
+    <br/>
+    <br/>
+    <h3 class="title">MY FAVORITE GAMES</h3>
+    <b-container>
+      <b-row>
+            <div v-if="!this.load">
       <div class="text-center">
         <b-spinner  label="Spinning" style="color:white"></b-spinner>
         <b-spinner label="Spinning" style="color:white"></b-spinner>
         <b-spinner  label="Spinning" style="color:white"></b-spinner>
       </div>
-    </div>
+            </div>
     <div v-else>
         <div v-if="!games.length" class="text-center">
         <b-button variant="primary">
         there is no Favorite Games
-        <b-badge variant="light">
-        <span class="sr-only">unread messages</span></b-badge>
-      </b-button>
+        </b-button>
           </div>
         <div v-else>
-      <GamePreview class="favorite_card"
-        v-for="g in shownGames"
-        :id="g.ID"
-        :hostTeam="g.homeTeam"
-        :guestTeam="g.awayTeam"
-        :date="g.date"
-        :hour="g.time"
-        :key="g.ID"
-      ></GamePreview>
+          <b-card-group deck >
+            <GamePreview class="favorite_card"
+              v-for="g in shownGames"
+              :id="g.ID"
+              :hostTeam="g.homeTeam"
+              :guestTeam="g.awayTeam"
+              :date="g.date"
+              :hour="g.time"
+              :key="g.ID"
+            ></GamePreview>
+      </b-card-group>
         </div>
     </div>
+      </b-row>
+    </b-container>
+
 
     </div>
 
@@ -99,5 +107,6 @@ export default {
   text-align: center;
   margin-left: 10%;
   margin-right:10% ;
+  
 }
 </style>

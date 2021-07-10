@@ -1,66 +1,72 @@
 <template>
   <div>
-
-    <div class="blueContent">
-        <h2 style="color:black ;text-align: center">Current Stage Games</h2>
-    </div>
- 
-    <div class="greenContent">
-        <div class="blueDiagonal">
-        </div>
-        <h3>Future Games</h3>
-                  <div class="container" id="future"> 
-                  <div v-if="futureGames">
-                    <b-card-group deck>
-                        <div v-for="game in this.futureGames" :class="card" :key="game.id">
-                            <GamePreview 
-                            :id="game.ID" 
-                            :hostTeam="game.homeTeam" 
-                            :guestTeam="game.awayTeam" 
-                            :date="game.date"
-                            :hour="game.time" 
-                            :stadium="game.stadium" >
-                            </GamePreview> 
-                            <center>
-                            <FavoriteFutureGameButton v-if="$root.store.username" :id="game.ID" ></FavoriteFutureGameButton>
-                            </center>
-                        </div>
-                    </b-card-group>
-                    </div>
-
- 
-        </div>
-
-
-
-   
-        <div class="container" id="past"> 
-          <div  id="pastGames" v-if="pastGames">
-                <h3>Past Games</h3>
-                <div>
+             <h3 class="title">CURRENT STAGE GAMES</h3>
+    <b-container>
+      <b-row>
+          <h1 class="title">Future Games</h1>
+      </b-row>
+      <b-row>
+          <div v-if="!this.pastLoad">
+              <div class="text-center">
+                   <b-spinner  label="Spinning" style="color:white"></b-spinner>
+                   <b-spinner label="Spinning" style="color:white"></b-spinner>
+                   <b-spinner  label="Spinning" style="color:white"></b-spinner>
+              </div>
+          </div>
+          <div v-else>
+              <div v-if="futureGames">
                 <b-card-group deck>
-                    <div  v-for="game in this.pastGames" :key="game.id">
-                    <GamePreview
-                    :id="game.ID" 
-                    :hostTeam="game.homeTeam" 
-                    :guestTeam="game.awayTeam" 
-                    :date="game.date"
-                    :hour="game.time" 
-                    :stadium="game.stadium"
-                    :homeScore="game.scoreHome"
-                    :awayScore="game.scoreAway"
-                    :events="game.events"></GamePreview> 
+                    <div v-for="game in this.futureGames" :class="card" :key="game.id">
+                        <GamePreview 
+                        :id="game.ID" 
+                        :hostTeam="game.homeTeam" 
+                        :guestTeam="game.awayTeam" 
+                        :date="game.date"
+                        :hour="game.time" 
+                        :stadium="game.stadium" >
+                        </GamePreview> 
+                        <center>
+                        <FavoriteFutureGameButton v-if="$root.store.username" :id="game.ID" ></FavoriteFutureGameButton>
+                        </center>
                     </div>
                 </b-card-group>
-                </div>
-            </div>
+              </div>
+          </div>
 
-   
-    </div>
-    </div>
-    
-    <div class="footer"></div>
+      </b-row>
+        <h1 class="title">Past Games</h1>
+      <b-row>
+      <b-row>
+        <div v-if="!this.pastLoad">
+              <div class="text-center">
+                   <b-spinner  label="Spinning" style="color:white"></b-spinner>
+                   <b-spinner label="Spinning" style="color:white"></b-spinner>
+                   <b-spinner  label="Spinning" style="color:white"></b-spinner>
+              </div>
+          </div>
+          <div v-else>
+            <div  v-if="pastGames">
+              <b-card-group deck>
+                  <div  v-for="game in this.pastGames" :key="game.id">
+                  <GamePreview
+                  :id="game.ID" 
+                  :hostTeam="game.homeTeam" 
+                  :guestTeam="game.awayTeam" 
+                  :date="game.date"
+                  :hour="game.time" 
+                  :stadium="game.stadium"
+                  :homeScore="game.scoreHome"
+                  :awayScore="game.scoreAway"
+                  :events="game.events"></GamePreview> 
+                  </div>
+              </b-card-group>
+           </div>
+        </div>
+         
+      </b-row>
 
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -69,9 +75,9 @@
 import moment from 'moment';
 import GamePreview from "../components/GamePreview.vue";
 import FavoriteFutureGameButton from '../components/FavoriteFutureGameButton.vue';
-
+import { BSpinner } from 'bootstrap-vue';
 export default {
-  components: { GamePreview, FavoriteFutureGameButton },
+  components: { GamePreview, FavoriteFutureGameButton, BSpinner},
     
     data(){
 
@@ -80,6 +86,8 @@ export default {
             user:false,
             futureGames:[],
             pastGames:[],
+            futureLoad:false,
+            pastLoad:false
         }
     },
     mounted(){
@@ -102,12 +110,13 @@ export default {
         async future_matches(){
             
             const response=await this.axios.get(
-                `http://localhost:3000/matches/futureSeasonGames`);
+                `http://localhost:3000/matches/getAllFutureGames`);
             if(response){
                 this.futureGames = response.data;
 
 
             }
+            this.futureLoad=true;
                 
         
         },
@@ -118,7 +127,8 @@ export default {
             if(response){
                 console.log(response.data)
                 this.pastGames= response.data;
-            }        
+            }    
+            this.pastLoad=true;    
         }
     }
 }

@@ -3,7 +3,7 @@
     <div>
       <b-card
         title="SuperLiga"
-        img-src="https://www.pe.com/wp-content/uploads/2021/05/xxxx_spo_ocr-l-soccer-generic-stock-001-17.jpg?w=1280"
+        img-src="https://www.logofootball.net/wp-content/uploads/danish-superliga-logo.png"
         img-alt="Image"
         img-top
         tag="article"
@@ -16,9 +16,24 @@
           Season Id: {{ season_id }}
           <br />
           Stage: {{ stage }}
-        </b-card-text>
 
-        <b-button href="#" variant="primary">Go somewhere</b-button>
+          
+        </b-card-text>
+        <b-card-text v-if="game">
+          <h5> Closet Game</h5>
+           home Team :{{game.homeTeam}}
+          <br/>
+           away Team :{{game.awayTeam}} 
+          <br/>
+           date :{{game.date}} 
+          <br/>
+           time :{{game.time}} 
+          <br/>
+           stadium :{{game.stadium}} 
+
+        
+        </b-card-text>
+      
       </b-card>
     </div>
   </div>
@@ -32,13 +47,17 @@ name: "Superliga"
 season: "2021/2022"
 season_id: 18334
 */
+import icon from '../../resource/danish-superliga-logo.png';
 export default {
+
   data() {
     return {
       leagueName: "superliga",
       season: "season",
       stage: "stage",
       season_id: "",
+      icon:icon,
+      game:null,
     };
   },
   methods: {
@@ -51,6 +70,7 @@ export default {
         this.season = league.season;
         this.stage = league.current_stage_id;
         this.season_id = league.season_id;
+        this.game=league.closetGame;
       }
     },
   },

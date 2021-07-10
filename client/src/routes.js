@@ -52,6 +52,16 @@ const routes = [
   name: "Player",
   component: () => import("./pages/PlayerPage")
 },
+{
+  path: "/FavoriteTeams",
+  name: "FavoriteTeams",
+  component: () => import("./pages/FavoriteTeams")
+},
+{
+  path: "/FavoritePlayers",
+  name: "FavoritePlayers",
+  component: () => import("./pages/FavoritePlayers")
+},
   {
     path: "*",
     name: "notFound",

@@ -75,6 +75,20 @@ router.get("/teamFullDetails/:teamName", async (req, res, next) => {
   }
 });
 
+router.get("/getTeamId/:teamName", async (req, res, next) => {
+
+  try {
+  
+    const teamName = req.params.teamName;    
+    teamDetails = await getTeamByName(teamName);
+    const teamId=teamDetails.data[0].id;
+    console.log(teamId)
+    res.status(200).send(teamId);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/teamFullDetailsbyID/:teamId", async (req, res, next) => {
   //const sorted = req.body.sorted;
   //const filter = req.body.filter;
@@ -118,7 +132,7 @@ router.get("/teamByName/:teamName", async (req, res, next) => {
     teamDetails = await getTeamByName( name );
     console.log(teamDetails.data);
 
-    res.send({
+    res.status(200).send({
       team: teamDetails,
     });
   } catch (error) {

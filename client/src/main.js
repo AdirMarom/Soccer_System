@@ -72,6 +72,7 @@ Vue.config.productionTip = false;
 
 const shared_data = {
    username: localStorage.username,
+   lastSearch : localStorage.lastSearch,
   //username: "hilla",
   login(username) {
     localStorage.setItem("username", username);
@@ -82,6 +83,7 @@ const shared_data = {
     console.log("logout");
     localStorage.removeItem( "username" );
     this.username = undefined;
+    this.lastSearch=undefined;
   }
 };
 console.log(shared_data);

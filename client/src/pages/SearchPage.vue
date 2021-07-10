@@ -8,7 +8,8 @@
                     </b-row>
 
                     <b-row>
-                            <b-input-group prepend="Search Player/Team:" id="search-input">
+                      <b-col>
+                          <b-input-group prepend="Search Player/Team:" id="search-input">
                             <b-form-input v-model="searchQuery"></b-form-input>
                             <b-input-group-append>
                               <b-button variant="success" @click="search">Search</b-button>
@@ -31,108 +32,55 @@
                               </div>
                             </b-input-group-append>
                           </b-input-group>
-                    </b-row>         
-                    <b-row>
-
-                          <b-input-group
-                          v-if="this.players"
+                      </b-col>
+                      <b-col>
+                          <b-input-group v-if="this.players"
                           prepend="filter By Postion/Team name:"
                           id="search-input1"
                         >
                           <b-form-input v-model="filter"></b-form-input>
                           <b-input-group-append>
                             <b-button variant="success" @click="filterBy_Position_team">
-                              Filter Position
+                              Position
                             </b-button>
                             <b-button variant="success" @click="clearFilter">
                               Clear Filter
                             </b-button>
                           </b-input-group-append>
                         </b-input-group>
+                      </b-col>
                     </b-row>
                                       
                     <b-row >
-                        <h2 class="title">Last Search: {{ this.lastSearch }}</h2>
+                        <h2 class="headerSearch">Last Search: {{  this.$root.store.lastSearch}}</h2>
                     </b-row>
                     <b-row>
-                         <div v-if="players">
+                        <div v-if="players">
+                         <h1  class="subheaderSearch">Players</h1>
+                          <b-card-group deck>
                          <playerInfo
                            v-for="player in this.players"
                            :key="player.player_id"
                            :player="player"
                          ></playerInfo>
+                          </b-card-group>
                        </div>
+
+
                     </b-row>
                     <b-row>
-                        <div v-if="teams">
-                        <teamPreview
-                          v-for="team in this.teams"
-                          :key="team.id"
-                          :team="team"
-                        ></teamPreview>
-                      </div>
+                          <div v-if="teams">
+                             <h1  class="subheaderSearch">Teams</h1>
+                              <b-card-group deck>
+                             <teamPreview
+                               v-for="team in this.teams"
+                               :key="team.id"
+                               :team="team"
+                             ></teamPreview>
+                              </b-card-group>
+                          </div>
                     </b-row>
-
             </b-container>
-    <div>
-      <h2>Last Search: {{ this.lastSearch }}</h2>
-      <h1 class="title">Search Page</h1>
-      <b-input-group prepend="Search Player/Team:" id="search-input">
-        <b-form-input v-model="searchQuery"></b-form-input>
-        <b-input-group-append>
-          <b-button variant="success" @click="search">Search</b-button>
-          <div>
-            <b-dropdown class="dropDown" text="Click To Sort">
-              <b-dropdown-item @click="sortDescendingTeams(true)">
-                ↑ Ascending Teams Names ↑
-              </b-dropdown-item>
-              <b-dropdown-item @click="sortDescendingTeams(false)">
-                ↓ Descending Teams Names ↓
-              </b-dropdown-item>
-              <b-dropdown-item> </b-dropdown-item>
-              <b-dropdown-item @click="sortDescendingPlayers(true)">
-                ↑ Ascending Players Names ↑
-              </b-dropdown-item>
-              <b-dropdown-item @click="sortDescendingPlayers(false)">
-                ↓ Descending Players Names ↓
-              </b-dropdown-item>
-            </b-dropdown>
-          </div>
-        </b-input-group-append>
-      </b-input-group>
-      <br />
-
-      <b-input-group
-        v-if="this.players"
-        prepend="filter By Postion/Team name:"
-        id="search-input1"
-      >
-        <b-form-input v-model="filter"></b-form-input>
-        <b-input-group-append>
-          <b-button variant="success" @click="filterBy_Position_team">
-            Filter Position
-          </b-button>
-          <b-button variant="success" @click="clearFilter">
-            Clear Filter
-          </b-button>
-        </b-input-group-append>
-      </b-input-group>
-      <br />
-      <div v-if="players">
-        <playerInfo
-          v-for="player in this.players"
-          :key="player.player_id"
-          :player="player"
-        ></playerInfo>
-      </div>
-      <div v-if="teams">
-        <teamPreview
-          v-for="team in this.teams"
-          :key="team.id"
-          :team="team"
-        ></teamPreview>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -157,7 +105,6 @@ export default {
     };
   },
   mounted() {
-    this.getAllGames();
     if (localStorage.lastQuery) {
       this.lastSearch = localStorage.lastQuery[localStorage.username];
     }
@@ -184,8 +131,8 @@ export default {
 
       if (this.players) {
         this.players.map(async (player) => {
-          if (player.team) {
-            let teamName = player.team.data.name;
+          if (player.team_name) {
+            let teamName = player.team_name;
             if (teamName) {
               teamName = teamName.toLowerCase();
             }
@@ -287,16 +234,17 @@ export default {
       }
     },
     async search() {
-      if (localStorage.username) {
-        const qur = this.searchQuery;
-        const name = localStorage.username;
-
-        if (!localStorage[name]) {
-          window.localStorage.setItem(name, qur);
-        }
-        window.localStorage[name] = qur;
-        this.lastSearch = qur;
-      }
+      this.$root.store.lastSearch=this.searchQuery;
+      //if (this.$root.store) {
+      //  const qur = this.searchQuery;
+      //  const name = localStorage.username;
+//
+      //  if (!localStorage[name]) {
+      //    window.localStorage.setItem(name, qur);
+      //  }
+      //  window.localStorage[name] = qur;
+      //  this.lastSearch = qur;
+      //}
       await this.searchTeam();
       await this.searchPlayers();
     },
@@ -305,6 +253,8 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Dosis&family=Zen+Tokyo+Zoo&display=swap');
+
 #search-input {
   margin-left: 20px;
   width: 500px;
@@ -315,6 +265,17 @@ export default {
 }
 .dropDown {
   color: blue;
+}
+
+.headerSearch{
+  font-family: 'Dosis', sans-serif;
+font-family: 'Zen Tokyo Zoo', cursive;
+  color:white;
+}
+.subheaderSearch{
+    font-family: 'Dosis', sans-serif;
+    font-family: 'Zen Tokyo Zoo', cursive;
+    color:white;
 }
 
 </style>

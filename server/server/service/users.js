@@ -5,7 +5,7 @@ const users_utils = require("../domain/routes/users_utils");
 const players_utils = require("../domain/routes/players_utils");
 const matches_utils = require("../domain/routes/matches_utils");
 const users_access = require("../data/userAccess")
-
+const league_utils = require("../domain/routes/league_utils");
 /**
  * Authenticate all incoming requests by middleware
  */
@@ -28,6 +28,32 @@ router.use(async function (req, res, next) {
 
 });
 
+router.get("/favoriteTeams", async (req, res, next) => {
+
+    try {
+  
+      const user_id = req.session.user_id;
+      const team_ids = await users_utils.getFavoriteTeams(user_id);
+      const teamDetails = await getTeams(team_ids);
+      res.status(200).send(teamDetails);
+    } catch (error) {
+  
+      next(error);
+  
+    }
+  
+  });
+
+  async function getTeams(teams_array) {
+    if (teams_array) {
+      let result = [];
+      for (let i = 0; i < teams_array.length; i++) {
+        const details = await league_utils.getTeamById(teams_array[i].team_id);
+        result.push(details.data);
+      }
+      return await Promise.all(result);
+    }
+  }
 router.post("/addFavoriteTeam", async (req, res, next) => {
 
     try {
