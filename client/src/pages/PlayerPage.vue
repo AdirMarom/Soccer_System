@@ -2,7 +2,7 @@
 <div class="page">
     <center>
 <div class="playerCard">
-  <b-card
+  <b-card  class="playerCard"
     no-body
     style="max-width: 20rem;"
   >
@@ -113,5 +113,6 @@ export default {
 .playerCard{
     width: 50%;
     height: 80%;
+
 }
 </style>

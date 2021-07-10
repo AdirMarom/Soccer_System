@@ -1,7 +1,11 @@
 <template>
   <div class="team-info">
     <div  @click="this.moveToTeamPage" title="id" class="team-title"><b>Team Name:</b> {{ team_name }}</div>
-    <img  @click="this.moveToTeamPage" :src="image" alt="player" width="50" height="50" />
+    <br/>
+    <center>
+      <img  @click="this.moveToTeamPage" :src="image" alt="player" width="100" height="100" />
+    </center>
+
   </div>
 </template>
 
@@ -61,13 +65,14 @@ export default {
   border-style: solid;
   border-radius: 10px;
   border-width: 5px;
-  border-color: cadetblue;
+  border-color: black;
+  background: whitesmoke;
 }
 
 .team-info .team-title {
   text-align: center;
   text-transform: uppercase;
-  color: rgb(111, 197, 157);
+  color: rgb(8, 8, 8);
 }
 
 .team-info .game-content {
