@@ -1,34 +1,53 @@
 <template>
-<div>
+<div class="page">
+    <center>
+<div class="playerCard">
+  <b-card
+    no-body
+    style="max-width: 20rem;"
+  >
+    <template #header>
+      <h4 class="mb-0">Player Page</h4>
+    </template>
+      <img :src="this.player.image_path" height="300" width="300" >
+    <b-card-body>
+      <b-card-text>
+            <p v-if="this.player.fullname"> Full Name:{{this.player.fullname}}</p>
+            <p>Team Name: {{this.player.team_name}}</p>
+            <p>Position: {{this.player.position_id}}</p>
+            <p>Nationality: {{this.player.nationality}}</p>
+            <p> Birth Date: {{this.player.birthdate}}</p>
+            <p>Birth Place: {{this.player.birthcountry}}</p>
+            <p>Height: {{this.player.height}}</p>
+            <p v-if="this.player.weight">Weight: {{this.player.weight}}</p>
+      </b-card-text>
+    </b-card-body>
+
+
+    <b-card-body>
+    </b-card-body>
+
+    <b-card-footer>
    <div v-if="$root.store.username" >
        <div v-if="!this.favorite==true">
        <FavoritePlayerButton :id="this.player.player_id" ></FavoritePlayerButton>
         </div>
        <div v-else>
-       <h2>this player is favorite </h2>
+        <img :src="this.icon" height="60" width="60" >
        </div>
-
     </div>  
-  <div>
-      <h2 style="color:black">Player Page</h2>
-      <div id="playerDiv"> 
-      <p > Full Name: {{this.player.full_name}}</p>
-      <p>Team Name: {{this.player.team_name}}</p>
-      <img :src="this.player.image_path" height="300" width="300" >
-      <p>Position: {{this.player.position_number}}</p>
-      <p >Common Name: {{this.player.common_name}}</p>
-      <p>Nationality: {{this.player.nationality}}</p>
-      <p> Birth Date: {{this.player.birthdate}}</p>
-      <p>Birth Place: {{this.player.birthcountry}}</p>
-      <p>Height: {{this.player.height}}</p>
-      <p v-if="this.player.weight">Weight: {{this.player.weight}}</p>
-    </div>
+    </b-card-footer>
+
+  </b-card>
 </div>
+</center>
 </div>
 </template>
 
 <script>
 import FavoritePlayerButton from '../components/FavoritePlayerButton.vue';
+import icon from '../../resource/favorite-icon.jpg';
+
 export default {
     components: { FavoritePlayerButton},
     data(){
@@ -36,6 +55,8 @@ export default {
             player:undefined,
             favorite:false,
             favoriteMatchs:[],
+            icon:icon,
+
             }
     },
     mounted(){
@@ -81,3 +102,16 @@ export default {
     }
 }
 </script>
+<style>
+
+#app {
+  background-image: url('../../resource/playerWallpaper.jpg');
+}
+.page{
+    margin-top:20px ;
+}
+.playerCard{
+    width: 50%;
+    height: 80%;
+}
+</style>

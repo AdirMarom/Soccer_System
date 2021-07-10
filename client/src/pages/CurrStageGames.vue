@@ -128,7 +128,7 @@ export default {
 .card {
   display: inline-block;
   width: 250px;
-  height: 300px;
+  height: 400px;
   position: relative;
   margin: 10px 10px;
   border-style: solid;

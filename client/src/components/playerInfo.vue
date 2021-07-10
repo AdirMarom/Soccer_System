@@ -7,7 +7,13 @@
       <li>Team Name: {{ team_name }}</li>
       <li>Player Position: {{ Position }}</li>
     </ul>
-    <img @click="this.moveToPlayerPage" :src="image" alt="player" width="50" height="50" />
+    <img
+      @click="this.moveToPlayerPage"
+      :src="image"
+      alt="player"
+      width="50"
+      height="50"
+    />
   </div>
 </template>
 
@@ -37,31 +43,24 @@ export default {
     */
     return {
       full_name: this.player.fullname,
-      team_name: this.player.team_id,
+      team_name: this.player.team.data.name,
       image: this.player.image_path,
       Position: this.player.position_id,
     };
   },
   async mounted() {
-
-    const response = await this.axios.get(
-        `http://localhost:3000/teams/getById/${this.player.team_id}`
-    );
-    const teamData = response.data.team.data;
-    this.team_name = teamData.name;
     this.image = this.player.image_path;
     console.log("Player preview mounted");
-    
   },
 
-    methods:{
-    moveToPlayerPage(){
-      this.$router.push({name:"Player",params:{Player_id: this.player.player_id}});
-
-
+  methods: {
+    moveToPlayerPage() {
+      this.$router.push({
+        name: "Player",
+        params: { Player_id: this.player.player_id },
+      });
     },
-    
-    },
+  },
 };
 </script>
 
@@ -75,7 +74,8 @@ export default {
   border-style: solid;
   border-radius: 10px;
   border-width: 5px;
-  border-color: cadetblue;
+  border-color: black;
+  background: whitesmoke;
 }
 
 .game-preview .player-title {
@@ -89,9 +89,3 @@ export default {
   overflow: hidden;
 }
 </style>
-
-
-
-
-
-
