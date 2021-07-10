@@ -20,13 +20,19 @@ async function getUserNames(){
 async function insertFavoriteTeam(user_id, team_id) {
   try {
     await DButils.execQuery(
-      `insert into dbo.FavoriteTeams (user_id,player_id) values ('${user_id}',${team_id})`
+      `insert into dbo.FavoriteTeams (user_id,team_id) values ('${user_id}',${team_id})`
     );
     return true;
   }
   catch (error) {
     console.log(error);
   }
+}
+async function getFavoriteTeam(user_id) {
+  const team_ids = await DButils.execQuery(
+    `select team_id from dbo.FavoriteTeams where user_id='${user_id}'`
+  );
+  return team_ids;
 }
 
 async function registerUser(username,firstname, lastname, country, hash_password,imageUrl, email, type){
@@ -82,7 +88,7 @@ async function getFavoriteMatches(user_id){
 }
 
 
-
+exports.getFavoriteTeam=getFavoriteTeam;
 exports.insertFavoriteTeam=insertFavoriteTeam;
 exports.getFavoriteMatches = getFavoriteMatches;
 exports.insertfavoriteMatches = insertfavoriteMatches;

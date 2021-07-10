@@ -360,5 +360,34 @@ router.get("/getAllPastGames", async (req, res, next) => {
   }
 });
 
+router.get("/closestGame", async (req, res, next) => {
+
+  try {
+
+        //  host: København
+    //  guest: Silkeborg
+    //  date: 2021-05-21
+    //  time: 20:00:00
+    //  stadium: West Ham United
+//
+    res.status(200).send({
+      "ID": "1111116",
+      "awayTeam": "Randers",
+      "date": "2021-08-22T00:00:00.000Z",
+      "events": null,
+      "homeTeam": "Nordsjælland",
+      "referee": "Heldermartinez1",
+      "scoreAway": null,
+      "scoreHome": null,
+      "stadium": "Right to Dream Park",
+      "time": "1970-01-01T20:00:00.000Z",
+    });
+  }
+
+   catch (error) {
+    next(error);
+  }
+});
+
 
 module.exports = router;

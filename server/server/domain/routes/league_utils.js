@@ -65,9 +65,18 @@ async function getSeasonDetails(season_id){
     next(error);
   }
 }
+async function getTeamById(team_id) {
+  if (!team_id) { return }
 
+  const res = await axios.get(`${api_domain}/teams/${team_id}`, {
+    params: {
+      api_token: process.env.api_token,
+    },
+  });
+  return res.data;
+}
 
-
+exports.getTeamById=getTeamById;
 exports.getSeasonDetails = getSeasonDetails;
 exports.getTeamByName = getTeamByName;
 exports.getTeams = getTeams;

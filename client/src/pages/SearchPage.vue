@@ -52,7 +52,7 @@
                     </b-row>
                                       
                     <b-row >
-                        <h2 class="headerSearch">Last Search: {{ this.lastSearch }}</h2>
+                        <h2 class="headerSearch">Last Search: {{  this.$root.store.lastSearch}}</h2>
                     </b-row>
                     <b-row>
                         <div v-if="players">
@@ -105,7 +105,6 @@ export default {
     };
   },
   mounted() {
-    this.getAllGames();
     if (localStorage.lastQuery) {
       this.lastSearch = localStorage.lastQuery[localStorage.username];
     }
@@ -132,8 +131,8 @@ export default {
 
       if (this.players) {
         this.players.map(async (player) => {
-          if (player.team) {
-            let teamName = player.team.data.name;
+          if (player.team_name) {
+            let teamName = player.team_name;
             if (teamName) {
               teamName = teamName.toLowerCase();
             }
@@ -235,16 +234,17 @@ export default {
       }
     },
     async search() {
-      if (localStorage.username) {
-        const qur = this.searchQuery;
-        const name = localStorage.username;
-
-        if (!localStorage[name]) {
-          window.localStorage.setItem(name, qur);
-        }
-        window.localStorage[name] = qur;
-        this.lastSearch = qur;
-      }
+      this.$root.store.lastSearch=this.searchQuery;
+      //if (this.$root.store) {
+      //  const qur = this.searchQuery;
+      //  const name = localStorage.username;
+//
+      //  if (!localStorage[name]) {
+      //    window.localStorage.setItem(name, qur);
+      //  }
+      //  window.localStorage[name] = qur;
+      //  this.lastSearch = qur;
+      //}
       await this.searchTeam();
       await this.searchPlayers();
     },

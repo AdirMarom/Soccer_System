@@ -1,7 +1,7 @@
 <template>
   <b-card bg-variant="light" id="card" word-wrap>
-    <b-card-title>
-      <b>Game Id:</b> {{ id }}
+    <b-card-title style="text-align: center; text-decoration:underline;">
+      Game
     </b-card-title>
     <b-card-text >
     <ul style="list-style-type:none;" class="game-content">
@@ -10,7 +10,7 @@
       <li> date: {{ date }}</li>
       <li> time: {{ hour }}</li>
       <li v-if="stadium"> stadium: {{ stadium }}</li>
-      <li v-if="homeScore"> homeScore: {{ hour }}</li>
+      <li v-if="homeScore"> homeScore: {{ homeScore }}</li>
       <li v-if="awayScore"> awayScore: {{ awayScore }}</li>
       <li v-if="events"> events: {{ events }}</li>
     </ul>
@@ -65,7 +65,7 @@ export default {
 
   },
   mounted(){
-    console.log("game preview mounted")
+    this.updateDate();
   } ,
   methods:{
      moveToTeamHostPage(){
@@ -77,7 +77,11 @@ export default {
        this.$router.push({name:"Team",params:{team_name:this.guestTeam}});
    //   this.$routers.push(`/Team/${this.hostTeam}`);
 
-    }
+    },
+    updateDate() {
+      this.date = this.date.split("T")[0];
+      this.hour = this.hour.split("T")[1].split(".")[0];
+    },
   } ,
 
 };
@@ -97,6 +101,7 @@ export default {
 }
 .game-preview .game-title {
   text-align: left;
+
   text-transform: uppercase;
   color:  rgb(111, 197, 157);
 }

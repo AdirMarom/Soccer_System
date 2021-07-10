@@ -3,6 +3,7 @@
     <h1 class="title">Login</h1>
     <b-form @submit.prevent="onLogin">
       <b-form-group
+      style="color:white"
         id="input-group-Username"
         label-cols-sm="3"
         label="Username:"
@@ -19,7 +20,8 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-form-group
+      <b-form-group 
+      style="color:white"
         id="input-group-Password"
         label-cols-sm="3"
         label="Password:"
@@ -43,7 +45,7 @@
         class="mx-auto w-100"
         >Login</b-button
       >
-      <div class="mt-2">
+      <div class="mt-2" style="color:white">
         Do not have an account yet?
         <router-link to="register"> Register in here</router-link>
       </div>

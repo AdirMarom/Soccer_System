@@ -8,11 +8,8 @@
             <b-col>
                     <LeagueInfo></LeagueInfo>
             </b-col>
-            <b-col>
-                    <h2 class="title">My Favorite Games</h2>
                     <LoginPage v-if="!$root.store.username"></LoginPage>
                     <FavoriteGames v-else :isMain="true"></FavoriteGames>
-            </b-col>
         </b-row>
 
       </b-container>

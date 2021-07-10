@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <b-navbar toggleable="lg" type="dark" variant="info" style="background-color: #353e40">
-      <b-navbar-brand :to="{ name: 'main' }">Superliga Vue</b-navbar-brand>
+    <b-navbar toggleable="lg" type="dark" variant="info" style="background-color:#171817 !important;">
+      <b-navbar-brand :to="{ name: 'main' }">Superliga</b-navbar-brand>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
         <b-nav-item :to="{ name: 'search' }">Search</b-nav-item>
         <b-nav-item :to="{ name: 'About' }">About</b-nav-item>
         <b-nav-item :to="{ name: 'CurrStageGames' }">current Stage Games</b-nav-item>
-        <b-nav-item :to="{ name: 'AddGameToSys' }">Add Game</b-nav-item>
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
+          <b-nav-item>hello Guest</b-nav-item>
           <b-nav-item :to="{ name: 'login' }">Login</b-nav-item>
           <b-nav-item :to="{ name: 'register' }">Register</b-nav-item>
         </b-navbar-nav>
@@ -18,10 +18,12 @@
         <b-navbar-nav class="ml-auto" v-else>
         <b-nav-item-dropdown right>
           <template #button-content>
-            User
+           {{$root.store.username}}
           </template>
 
-          <b-dropdown-item href="#" @click="moveToMyGames">Favorites</b-dropdown-item>
+          <b-dropdown-item href="#" @click="moveToMyGames">Favorite Games</b-dropdown-item>
+          <b-dropdown-item href="#" @click="moveToMyPlayers">Favorite Players</b-dropdown-item>
+          <b-dropdown-item href="#" @click="moveToMyTeams">Favorite Teams</b-dropdown-item>
           <b-dropdown-item href="#" @click="Logout">Log Out</b-dropdown-item>
         </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -48,6 +50,12 @@ export default {
     moveToMyGames(){
         this.$router.push({name:"FavoriteGames" });
 
+    },
+    moveToMyTeams(){
+      this.$router.push({name:"FavoriteTeams" });
+    },
+    moveToMyPlayers(){
+      this.$router.push({name:"FavoritePlayers" });
     }
   }
 };
@@ -74,6 +82,6 @@ export default {
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #171817;
 }
 </style>

@@ -16,8 +16,24 @@
           Season Id: {{ season_id }}
           <br />
           Stage: {{ stage }}
-        </b-card-text>
 
+          
+        </b-card-text>
+        <b-card-text v-if="game">
+          <h5> Closet Game</h5>
+           home Team :{{game.homeTeam}}
+          <br/>
+           away Team :{{game.awayTeam}} 
+          <br/>
+           date :{{game.date}} 
+          <br/>
+           time :{{game.time}} 
+          <br/>
+           stadium :{{game.stadium}} 
+
+        
+        </b-card-text>
+      
       </b-card>
     </div>
   </div>
@@ -33,6 +49,7 @@ season_id: 18334
 */
 import icon from '../../resource/danish-superliga-logo.png';
 export default {
+
   data() {
     return {
       leagueName: "superliga",
@@ -40,6 +57,7 @@ export default {
       stage: "stage",
       season_id: "",
       icon:icon,
+      game:null,
     };
   },
   methods: {
@@ -52,6 +70,7 @@ export default {
         this.season = league.season;
         this.stage = league.current_stage_id;
         this.season_id = league.season_id;
+        this.game=league.closetGame;
       }
     },
   },

@@ -30,14 +30,14 @@
            <b-col>
             <b-card
             title="Ben Rozilio"
-            img-src="https://res.cloudinary.com/dsqysnhpw/image/upload/v1625926656/adir_djhv4w.jpg" 
+            img-src="https://res.cloudinary.com/dsqysnhpw/image/upload/v1625929229/WhatsApp_Image_2021-07-10_at_18.00.01_g87bwq.jpg" 
             img-alt="Image"
             img-top
             tag="article"
             style="max-width: 20rem ; color:black"
             class="mb-2"
             >
-            <b-card-text style="color:black">
+            <b-card-text style="color:black"><br/><br/><br/><br/><br/><br/><br/><br/>
                         Third year student of Software and Information Systems, Ben-Gurion University
             </b-card-text>
 

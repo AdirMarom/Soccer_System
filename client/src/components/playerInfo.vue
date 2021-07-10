@@ -45,7 +45,7 @@ export default {
       full_name: this.player.fullname,
       team_name: this.player.team_name,
       image: this.player.image_path,
-      Position: this.player.position_id,
+      Position: this.player.position_id
     };
   },
   async mounted() {
