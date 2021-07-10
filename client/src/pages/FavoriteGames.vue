@@ -1,16 +1,24 @@
 <template>
   <div>
-    <GamePreview
-      v-for="g in games"
-      :date="g.date" 
-      :id="g.ID"
-      :hostTeam="g.homeTeam"
-      :guestTeam="g.awayTeam"
-      :date="g.date"
-
-      :hour="g.time"
-      :key="g.ID"
-    ></GamePreview>
+    <div v-if="!games.length" class="text-center">
+      <b-button variant="primary">
+        there is no Favorite Games
+        <b-badge variant="light">
+          <span class="sr-only">unread messages</span></b-badge
+        >
+      </b-button>
+    </div>
+    <div v-else>
+      <GamePreview
+        v-for="g in shownGames"
+        :id="g.ID"
+        :hostTeam="g.homeTeam"
+        :guestTeam="g.awayTeam"
+        :date="g.date"
+        :hour="g.time"
+        :key="g.ID"
+      ></GamePreview>
+    </div>
   </div>
 </template>
 
@@ -18,6 +26,12 @@
 import GamePreview from "../components/GamePreview.vue";
 export default {
   name: "FavoriteGames",
+  props: {
+    isMain: {
+      type: Boolean,
+      required: true,
+    },
+  },
   components: {
     GamePreview,
   },
@@ -26,6 +40,7 @@ export default {
       //games: this.axios.get("http://localhost:3000/matches/favoriteMatches")
       allMyGames: [],
       games: [],
+      shownGames: [],
       //  {
       //    id:25,
       //    hostTeam: "Maccabi Tel-Aviv",
@@ -47,8 +62,12 @@ export default {
       const response1 = await this.axios.get(
         "http://localhost:3000/matches/favoriteFutureMatches"
       );
-      if (response1.status == 200) {
+      if (response1.data) {
         this.games = response1.data;
+        if (this.isMain)
+
+          this.shownGames = this.games.slice(0, 3);
+        else this.shownGames = this.games;
       }
     },
   },
@@ -58,4 +77,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

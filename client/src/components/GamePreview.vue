@@ -1,9 +1,10 @@
 <template>
-  <div class="game-preview">
-    <div :title="id" class="game-title">
+  <b-card bg-variant="light" id="card" word-wrap>
+    <b-card-title>
       <b>Game Id:</b> {{ id }}
-    </div>
-    <ul class="game-content">
+    </b-card-title>
+    <b-card-text >
+    <ul style="list-style-type:none;" class="game-content">
       <li @click="this.moveToTeamHostPage"> host: {{ hostTeam }}</li>
       <li @click="this.moveToTeamawaytPage"> guest: {{ guestTeam }}</li>
       <li> date: {{ date }}</li>
@@ -12,9 +13,11 @@
       <li v-if="homeScore"> homeScore: {{ hour }}</li>
       <li v-if="awayScore"> awayScore: {{ awayScore }}</li>
       <li v-if="events"> events: {{ events }}</li>
-      
     </ul>
-  </div>
+    </b-card-text>
+      <b-card-text>
+      </b-card-text>
+  </b-card>
 </template>
 
 <script>
@@ -83,8 +86,8 @@ export default {
 <style>
 .game-preview {
   display: inline-block;
-  width: 250px;
-  height: 300px;
+  width: 300px;
+  height: 500px;
   position: relative;
   margin: 10px 10px;
   border-style: solid;
@@ -92,16 +95,17 @@ export default {
   border-width: 5px;
   border-color:cadetblue;
 }
-
 .game-preview .game-title {
-  text-align: center;
+  text-align: left;
   text-transform: uppercase;
   color:  rgb(111, 197, 157);
 }
-
 .game-preview .game-content {
   width: 100%;
   overflow: hidden;
+}
+#card{
+  position: relative;
 }
 
 

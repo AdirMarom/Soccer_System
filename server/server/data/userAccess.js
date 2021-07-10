@@ -38,10 +38,15 @@ async function registerUser(username,firstname, lastname, country, hash_password
 }
 
 async function insertFavoritePlayers(user_id,player_id){
+  try{
     await DButils.execQuery(
-        `insert into dbo.FavoritePlayers values ('${user_id}',${player_id})`
+        `insert into dbo.FavoritePlayers (user_id,player_id) values ('${user_id}',${player_id})`
       );
     return true;
+  }
+  catch (error) {
+    console.log(error);
+}
   }
 
 async function insertfavoriteMatches( user_id, match_id){

@@ -32,21 +32,20 @@ async function getPlayerIdsByTeam(team_id) {
 }
 async function getPlayerbyName(playerName) {
 
-    let playerList = [];
-    const res = await axios.get(`${api_domain}/players/search/${playerName}`, {
+  let playerList = [];
+  const res = await axios.get(`${api_domain}/players/search/${playerName}`, {
 
-        params: {
+    params: {
+      include: "team",
+      api_token: process.env.api_token
+    }
 
-            api_token: process.env.api_token
+  });
 
-        }
-
-    });
-
-    res.data.data.map((player) => playerList.push(player));
-    let players_info = await Promise.all(playerList);
-    //const players =  await extractRelevantPlayerData(players_info);
-    return players_info;
+  res.data.data.map((player) => playerList.push(player));
+  let players_info = await Promise.all(playerList);
+  //const players =  await extractRelevantPlayerData(players_info);
+  return players_info;
 
 }
 

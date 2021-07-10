@@ -32,7 +32,6 @@ router.get("/favoriteFutureMatches", async (req, res, next) => {
     matchs_array.map((match1) => {
       futureMatches.map((match2) => {
         console.log(match1);
-        con
         if (match1.ID == match2.ID) {
           result.push(match1);
         }

@@ -1,13 +1,13 @@
 <template>
   <div>
-        <b-button style="margin-left: 1%; margin-top:0.5%;margin-bottom:0.5%" variant="outline-primary" @click="addPlayer">Add To Favorites </b-button>
+        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" @click="addPlayer">Add To Favorites </button>
         <b-alert v-if="addFlag" show dismissible>Player was successfully added!</b-alert>
   </div>
 </template>
 
 <script>
 export default {
-
+    name: "FavoritePlayerButton",
     props:{
     id:{
         type:String,
@@ -23,7 +23,7 @@ methods:{
     async addPlayer(){
         try{
             const response=await this.axios.post(`http://localhost:3000/users/addFavoritePlayer`,
-            {match_id:this.id});
+            {playerId:this.id});
             if(response.status==201){
                 this.addFlag=true;
                 

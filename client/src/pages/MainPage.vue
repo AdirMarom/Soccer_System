@@ -1,9 +1,23 @@
 <template>
-  <div class="container">
-    <h1 class="title">Main Page</h1>
-    <LoginPage v-if="!$root.store.username"></LoginPage>
-    <FavoriteGames v-else></FavoriteGames>
-    <LeagueInfo></LeagueInfo>
+  <div class="mainDiv">
+    <div class="left_container">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <LeagueInfo></LeagueInfo>
+    </div>
+    <br />
+    <br />
+    <img src='../../resource/SuperLiga.png' height="80" width="250">
+
+
+    <div class="right_container">
+      <br />
+      <LoginPage v-if="!$root.store.username"></LoginPage>
+      <FavoriteGames v-else :isMain="true"></FavoriteGames>
+    </div>
   </div>
 </template>
 
@@ -12,26 +26,43 @@ import LeagueInfo from "../components/LeagueInfo";
 import FavoriteGames from "../pages/FavoriteGames";
 import LoginPage from "../pages/LoginPage";
 
-
 export default {
   components: {
-    LeagueInfo, 
-    LoginPage, 
+    LeagueInfo,
+    LoginPage,
     FavoriteGames,
-  }
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-.RandomRecipes {
-  margin: 10px 0 10px;
+<style >
+.mainDiv {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  display: inline-flex;
 }
-.blur {
-  -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-  filter: blur(2px);
+#app {
+  background-image: url('../../resource/playerWallpaper.jpg');
 }
-::v-deep .blur .recipe-preview {
-  pointer-events: none;
-  cursor: default;
+.left_container {
+  margin-left: 10%;
+  margin-right: 8%;
+  height: 70%;
+}
+.right_container {
+  display: block;
+  margin-top: 5%;
+}
+.title {
+  text-align: center;
+  position: relative;
+  color: rgb(255, 255, 255);
+  font: icon italic;
+}
+.leagueName {
+  color: rgb(255, 255, 255);
+  text-decoration: underline;
 }
 </style>
