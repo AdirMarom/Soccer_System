@@ -1,5 +1,79 @@
 <template>
+
+
   <div class="search">
+            <b-container>
+                    <b-row>
+                        <h1 class="title">Search Page</h1>
+                    </b-row>
+
+                    <b-row>
+                            <b-input-group prepend="Search Player/Team:" id="search-input">
+                            <b-form-input v-model="searchQuery"></b-form-input>
+                            <b-input-group-append>
+                              <b-button variant="success" @click="search">Search</b-button>
+                              <div>
+                                <b-dropdown class="dropDown" text="Click To Sort">
+                                  <b-dropdown-item @click="sortDescendingTeams(true)">
+                                    ↑ Ascending Teams Names ↑
+                                  </b-dropdown-item>
+                                  <b-dropdown-item @click="sortDescendingTeams(false)">
+                                    ↓ Descending Teams Names ↓
+                                  </b-dropdown-item>
+                                  <b-dropdown-item> </b-dropdown-item>
+                                  <b-dropdown-item @click="sortDescendingPlayers(true)">
+                                    ↑ Ascending Players Names ↑
+                                  </b-dropdown-item>
+                                  <b-dropdown-item @click="sortDescendingPlayers(false)">
+                                    ↓ Descending Players Names ↓
+                                  </b-dropdown-item>
+                                </b-dropdown>
+                              </div>
+                            </b-input-group-append>
+                          </b-input-group>
+                    </b-row>         
+                    <b-row>
+
+                          <b-input-group
+                          v-if="this.players"
+                          prepend="filter By Postion/Team name:"
+                          id="search-input1"
+                        >
+                          <b-form-input v-model="filter"></b-form-input>
+                          <b-input-group-append>
+                            <b-button variant="success" @click="filterBy_Position_team">
+                              Filter Position
+                            </b-button>
+                            <b-button variant="success" @click="clearFilter">
+                              Clear Filter
+                            </b-button>
+                          </b-input-group-append>
+                        </b-input-group>
+                    </b-row>
+                                      
+                    <b-row >
+                        <h2 class="title">Last Search: {{ this.lastSearch }}</h2>
+                    </b-row>
+                    <b-row>
+                         <div v-if="players">
+                         <playerInfo
+                           v-for="player in this.players"
+                           :key="player.player_id"
+                           :player="player"
+                         ></playerInfo>
+                       </div>
+                    </b-row>
+                    <b-row>
+                        <div v-if="teams">
+                        <teamPreview
+                          v-for="team in this.teams"
+                          :key="team.id"
+                          :team="team"
+                        ></teamPreview>
+                      </div>
+                    </b-row>
+
+            </b-container>
     <div>
       <h2>Last Search: {{ this.lastSearch }}</h2>
       <h1 class="title">Search Page</h1>
@@ -242,15 +316,5 @@ export default {
 .dropDown {
   color: blue;
 }
-.search {
-  background-image: url("https://thumbs.dreamstime.com/b/white-stripe-green-soccer-field-26583747.jpg");
-}
-.title {
-  height: 100%;
-  width: 100%;
-  font-family: "Merienda", Helvetica, Arial;
-  text-decoration: underline;
-  color: rgb(0, 0, 0);
-  text-anchor: start;
-}
+
 </style>

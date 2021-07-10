@@ -15,7 +15,10 @@ async function markMatchAsFavorite( user_id, match_id ){
   const res=users_access.insertfavoriteMatches(user_id,match_id)
   return res;
 }
-
+async function markTeamAsFavorite(user_id, team_id) {
+  const res = users_access.insertFavoriteTeam(user_id, team_id)
+  return res;
+}
 
 async function getFavoriteMatches(user_id) {
   const match_ids =users_access.getFavoriteMatches(user_id)
@@ -36,7 +39,7 @@ async function getUserNames() {
   return user;
 }
 
-
+exports.markTeamAsFavorite=markTeamAsFavorite;
 exports.getUserNames = getUserNames;
 exports.isUserAdmin = isUserAdmin;
 exports.markMatchAsFavorite = markMatchAsFavorite;

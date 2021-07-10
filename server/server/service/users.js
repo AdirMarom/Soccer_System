@@ -28,7 +28,21 @@ router.use(async function (req, res, next) {
 
 });
 
+router.post("/addFavoriteTeam", async (req, res, next) => {
 
+    try {
+      const user_id = req.session.user_id;
+      const team_id = req.body.team_id;
+      await users_utils.markTeamAsFavorite(user_id, team_id);
+      res.status(201).send("The team successfully saved as favorite");
+  
+    } catch (error) {
+  
+      next(error);
+  
+    }
+  
+  });
 /**
  * This path gets body with playerId and save this player in the favorites list of the logged-in user
  */

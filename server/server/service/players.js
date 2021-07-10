@@ -10,6 +10,9 @@ router.get("/playersDetails/:playerName", async (req, res, next) => {
     try {
     const name = req.params.playerName;
     const players = await  players_utils.getPlayerbyName( name );
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    console.log(players);
+    //const final_details = await players_utils.extractRelevantPlayerData(players);
     res.status(200).send(players);
 
     } catch (error) {

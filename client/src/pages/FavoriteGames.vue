@@ -1,15 +1,22 @@
 <template>
   <div>
-    <div v-if="!games.length" class="text-center">
-      <b-button variant="primary">
-        there is no Favorite Games
-        <b-badge variant="light">
-          <span class="sr-only">unread messages</span></b-badge
-        >
-      </b-button>
+    <div v-if="!this.load">
+      <div class="text-center">
+        <b-spinner  label="Spinning" style="color:white"></b-spinner>
+        <b-spinner label="Spinning" style="color:white"></b-spinner>
+        <b-spinner  label="Spinning" style="color:white"></b-spinner>
+      </div>
     </div>
     <div v-else>
-      <GamePreview
+        <div v-if="!games.length" class="text-center">
+        <b-button variant="primary">
+        there is no Favorite Games
+        <b-badge variant="light">
+        <span class="sr-only">unread messages</span></b-badge>
+      </b-button>
+          </div>
+        <div v-else>
+      <GamePreview class="favorite_card"
         v-for="g in shownGames"
         :id="g.ID"
         :hostTeam="g.homeTeam"
@@ -18,13 +25,19 @@
         :hour="g.time"
         :key="g.ID"
       ></GamePreview>
+        </div>
     </div>
-  </div>
+
+    </div>
+
 </template>
 
 <script>
 import GamePreview from "../components/GamePreview.vue";
+import { BSpinner } from 'bootstrap-vue'
+
 export default {
+
   name: "FavoriteGames",
   props: {
     isMain: {
@@ -34,10 +47,12 @@ export default {
   },
   components: {
     GamePreview,
+    BSpinner,
   },
   data() {
     return {
       //games: this.axios.get("http://localhost:3000/matches/favoriteMatches")
+      load:false,
       allMyGames: [],
       games: [],
       shownGames: [],
@@ -65,10 +80,12 @@ export default {
       if (response1.data) {
         this.games = response1.data;
         if (this.isMain)
-
           this.shownGames = this.games.slice(0, 3);
-        else this.shownGames = this.games;
+        else 
+          this.shownGames = this.games;
+
       }
+      this.load=true;
     },
   },
   mounted() {
@@ -78,4 +95,9 @@ export default {
 </script>
 
 <style>
+.favorite_card{
+  text-align: center;
+  margin-left: 10%;
+  margin-right:10% ;
+}
 </style>

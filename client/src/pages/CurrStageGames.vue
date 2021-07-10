@@ -102,7 +102,7 @@ export default {
         async future_matches(){
             
             const response=await this.axios.get(
-                `http://localhost:3000/matches/getAllFutureGames`);
+                `http://localhost:3000/matches/futureSeasonGames`);
             if(response){
                 this.futureGames = response.data;
 

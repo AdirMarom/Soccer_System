@@ -5,23 +5,39 @@ const api_domain = "https://soccer.sportmonks.com/api/v2.0";
 
 function sortPlayersByName(players) {
 
+
+
     return players.slice().sort(function (player1, player2) {
+
+
 
         return player2.name - player1.name;
 
+
+
     });
+
+
 
 }
 
 async function getPlayerIdsByTeam(team_id) {
 
+
+
     let player_ids_list = [];
     const team = await axios.get(`${api_domain}/teams/${team_id}`, {
 
+
+
         params: {
+
+
 
             include: "squad",
             api_token: process.env.api_token
+
+
 
         }
 
@@ -29,174 +45,353 @@ async function getPlayerIdsByTeam(team_id) {
     team.data.data.squad.data.map((player) => player_ids_list.push(player.player_id));
     return player_ids_list;
 
+
+
 }
 async function getPlayerbyName(playerName) {
 
-  let playerList = [];
-  const res = await axios.get(`${api_domain}/players/search/${playerName}`, {
 
-    params: {
-      include: "team",
-      api_token: process.env.api_token
-    }
 
-  });
+    let playerList = [];
+    const res = await axios.get(`${api_domain}/players/search/${playerName}`, {
 
-  res.data.data.map((player) => playerList.push(player));
-  let players_info = await Promise.all(playerList);
-  //const players =  await extractRelevantPlayerData(players_info);
-  return players_info;
+
+
+        params: {
+
+            include: "team",
+            api_token: process.env.api_token
+
+        }
+
+
+
+    });
+
+    res.data.data.map((player) => playerList.push(player));
+    let players_info = await Promise.all(playerList);
+    const players = await extractRelevantformatData(players_info);
+
+    return players
+
+
+
+
 
 }
 
 
-//async function getPlayersInfo(players_ids_list) {
-//
-//  let promises = [];
-//  players_ids_list.map((id) =>
-//    promises.push(
-//      axios.get(`${api_domain}/players/${id}`, {
-//        params: {
-//          api_token: process.env.api_token,
-//          include: "team",
-//        },
-//      })
-//    )
-//  );
-//  const players_info = await Promise.all(promises);
-//  return players_info;
-//  //return extractRelevantPlayerData(players_info);
-//}
-//async function getPlayersInfo(players_ids_list) {
- // let promises = [];
- // players_ids_list.map((id) =>
- //   promises.push(
- //     axios.get(`${api_domain}/players/${id}`, {
- //       params: {
- //         api_token: process.env.api_token,
- //         include: "team",
- //       },
- //     })
- //   )
- // );
- // 
- // let players_info = await Promise.all(promises);
- //     for(let i=0 ; i<players_info.length;i++){
- //     results.push(extractRelevantPlayerData(players_info[i]));
- //   }
- //   //let players_info = await getPlayersInfo(player_ids_list);
- //   results=await Promise.all(results);
- // return results;
-//}
+// async function getPlayersInfo(players_ids_list) {
 
-//function extractRelevantPlayerData(players_info) {
-//  return players_info.map((player_info) => {
+//
+
+// let promises = [];
+
+// players_ids_list.map((id) =>
+
+//    promises.push(
+
+//      axios.get(`${api_domain}/players/${id}`, {
+
+//        params: {
+
+//          api_token: process.env.api_token,
+
+//          include: "team",
+
+//        },
+
+//      })
+
+//    )
+
+// );
+
+// const players_info = await Promise.all(promises);
+
+// return players_info;
+
+// //return extractRelevantPlayerData(players_info);
+
+// }
+
+// async function getPlayersInfo(players_ids_list) {
+
+// let promises = [];
+
+// players_ids_list.map((id) =>
+
+// promises.push(
+
+//     axios.get(`${api_domain}/players/${id}`, {
+
+//       params: {
+
+//         api_token: process.env.api_token,
+
+//         include: "team",
+
+//       },
+
+//     })
+
+// )
+
+// );
+
+//
+
+// let players_info = await Promise.all(promises);
+
+//     for(let i=0 ; i<players_info.length;i++){
+
+//     results.push(extractRelevantPlayerData(players_info[i]));
+
+// }
+
+// //let players_info = await getPlayersInfo(player_ids_list);
+
+// results=await Promise.all(results);
+
+// return results;
+
+// }
+
+// function extractRelevantPlayerData(players_info) {
+
+// return players_info.map((player_info) => {
+
 //    const { player_id,fullname, image_path, position_id } = player_info.data.data;
+
 //    const { name } = player_info.data.data.team.data;
+
 //    return {
+
 //      player_id: player_id,
+
 //      full_name: fullname,
+
 //      team_name: name,
+
 //      pic: image_path,
+
 //      position_number: position_id
+
 //    };
-//  });
-//}
+
+// });
+
+// }
 
 async function getPlayersByTeam(team_id) {
 
-  let player_ids_list = await getPlayerIdsByTeam(team_id);
-  console.log(player_ids_list);
-  let players_info = await getPlayersInfo(player_ids_list);
-  return players_info;
-  //return extractPlayerData(players_info);
 
-  //  let player_ids_list = await getPlayerIdsByTeam(team_id);
-  //  console.log(player_ids_list);
-  //  let results=[]
-  //
-  //  for(let i=0 ; i<player_ids_list.length;i++){
-  //    results.push(getPlayersInfoBySingleID(player_ids_list[i]));
-  //  }
-  //  //let players_info = await getPlayersInfo(player_ids_list);
-  //  results=await Promise.all(results);
-  //  return results;
+
+    let player_ids_list = await getPlayerIdsByTeam(team_id);
+    console.log(player_ids_list);
+    let players_info = await getPlayersInfo(player_ids_list);
+    return players_info;
+
+// return extractPlayerData(players_info);
+
+// let player_ids_list = await getPlayerIdsByTeam(team_id);
+
+// console.log(player_ids_list);
+
+// let results=[]
+
+//
+
+// for(let i=0 ; i<player_ids_list.length;i++){
+
+//    results.push(getPlayersInfoBySingleID(player_ids_list[i]));
+
+// }
+
+// //let players_info = await getPlayersInfo(player_ids_list);
+
+// results=await Promise.all(results);
+
+// return results;
 
 }
 
+function extractRelevantformatData(players_info) {
 
+    return players_info.map((player_info) => {
+
+        console.log(player_info);
+        const {
+
+            fullname,
+            image_path,
+            position_id,
+            player_id,
+            common_name,
+            nationality,
+            birthdate,
+            birthcountry,
+            height,
+            weight
+
+        } = player_info;
+        let id=null;
+        let name=null;
+        if( player_info.team){
+            id=player_info.team.data.id;
+            name=player_info.team.data.name;
+        }
+
+        return {
+
+            team_id: id,
+            team_name: name,
+            image_path: image_path,
+            position_id: position_id,
+            common_name: common_name,
+            nationality: nationality,
+            birthdate: birthdate,
+            birthcountry: birthcountry,
+            height: height,
+            weight: weight,
+            fullname: fullname,
+            player_id: player_id
+
+        };
+
+    });
+
+}
 
 function extractRelevantPlayerData(players_info) {
-  
-  return players_info.map((player_info) => {
-    console.log(player_info);
-    const { fullname, image_path, position_id,player_id,common_name,nationality,birthdate,birthcountry,height,weight } = player_info.data.data;
-    const { id, name } = player_info.data.data.team.data;
-    return {
-      team_id:id,
-      team_name:name,
-      image_path: image_path,
-      position_id: position_id,
-      common_name:common_name,
-      nationality:nationality,
-      birthdate:birthdate,
-      birthcountry:birthcountry,
-      height:height,
-      weight:weight,
-      fullname: fullname,
-      player_id: player_id,
-    };
-  });
+
+    return players_info.map((player_info) => {
+
+        console.log(player_info);
+        const {
+
+            fullname,
+            image_path,
+            position_id,
+            player_id,
+            common_name,
+            nationality,
+            birthdate,
+            birthcountry,
+            height,
+            weight
+
+        } = player_info.data.data;
+        const {id, name} = player_info.data.data.team.data;
+        return {
+
+            team_id: id,
+            team_name: name,
+            image_path: image_path,
+            position_id: position_id,
+            common_name: common_name,
+            nationality: nationality,
+            birthdate: birthdate,
+            birthcountry: birthcountry,
+            height: height,
+            weight: weight,
+            fullname: fullname,
+            player_id: player_id
+
+        };
+
+    });
+
 }
 
 
 function extractRelevantSinglePlayerData(player_info) {
-  
+
+
+
     console.log(player_info);
-    const { fullname, image_path, position_id,player_id,common_name,nationality,birthdate,birthcountry,height,weight } = player_info.data.data;
-    const { id, name } = player_info.data.data.team.data;
+    const {
+
+        fullname,
+        image_path,
+        position_id,
+        player_id,
+        common_name,
+        nationality,
+        birthdate,
+        birthcountry,
+        height,
+        weight
+
+    } = player_info.data.data;
+    const {id, name} = player_info.data.data.team.data;
     return {
-      team_id:id,
-      team_name:name,
-      image_path: image_path,
-      position_id: position_id,
-      common_name:common_name,
-      nationality:nationality,
-      birthdate:birthdate,
-      birthcountry:birthcountry,
-      height:height,
-      weight:weight,
-      fullname: fullname,
-      player_id: player_id,
+
+        team_id: id,
+        team_name: name,
+        image_path: image_path,
+        position_id: position_id,
+        common_name: common_name,
+        nationality: nationality,
+        birthdate: birthdate,
+        birthcountry: birthcountry,
+        height: height,
+        weight: weight,
+        fullname: fullname,
+        player_id: player_id
+
     };
 
+
+
 }
-//function extractRelevantPlayerData(players_info) {
 
- // const details=players_info.data.data;
- // console.log(
- //   details
- // )
- // const final_details= {
- // player_id: details.player_id,
- // full_name: details.fullname,
- // team_name: details.team_id,
- // pic:details.image_path,
- // position_number: details.position_id,
- //   common_name: details.common_name , nationality: details.nationality,
- //                       birthdate: details.birthdate , birthcountry: details.birthcountry , height: details.height,
- //                       weight: details.weight}
+// function extractRelevantPlayerData(players_info) {
+
+// const details=players_info.data.data;
+
+// console.log(
+
+// details
+
+// )
+
+// const final_details= {
+
+// player_id: details.player_id,
+
+// full_name: details.fullname,
+
+// team_name: details.team_id,
+
+// pic:details.image_path,
+
+// position_number: details.position_id,
+
+// common_name: details.common_name , nationality: details.nationality,
+
+//                       birthdate: details.birthdate , birthcountry: details.birthcountry , height: details.height,
+
+//                       weight: details.weight}
+
 //
- // return final_details;
 
-//}
+// return final_details;
+
+// }
 
 //
 function extractPlayerData(players_info) {
 
+
+
     return players_info.map((player_info) => {
 
+
+
         const {
+
+
 
             common_name,
             nationality,
@@ -205,9 +400,13 @@ function extractPlayerData(players_info) {
             height,
             weight
 
+
+
         } = player_info;
 
         return {
+
+
 
             commonname: common_name,
             nationality: nationality,
@@ -216,48 +415,64 @@ function extractPlayerData(players_info) {
             height: height,
             weight: weight
 
+
+
         };
 
+
+
     });
 
+
+
 }
+
 //
 async function getPlayersInfoBySingleID(players_id) {
-  try{
-    res = await axios.get(`${api_domain}/players/${players_id}`, {
-      params: {
-        api_token: process.env.api_token,
-        include: "team",
-      },
-    });
-    return extractRelevantSinglePlayerData(res);
-  }
-  catch(e){
-    console.log(e);
-  }
+
+    try {
+
+        res = await axios.get(`${api_domain}/players/${players_id}`, {
+
+            params: {
+
+                api_token: process.env.api_token,
+                include: "team"
+
+            }
+
+        });
+        return extractRelevantSinglePlayerData(res);
+
+    } catch (e) {
+
+        console.log(e);
+
+    }
+
+
 
 }
 
 async function getPlayersInfo(players_ids_list) {
-  let promises = [];
-  players_ids_list.map((id) =>
-    promises.push(
-      axios.get(`${api_domain}/players/${id}`, {
-        params: {
-          api_token: process.env.api_token,
-          include: "team",
-        },
-      })
-    )
-  );
-  let players_info = await Promise.all(promises);
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
-  
-  return extractRelevantPlayerData(players_info);
+    let promises = [];
+    players_ids_list.map((id) => promises.push(axios.get(`${api_domain}/players/${id}`, {
+
+        params: {
+
+            api_token: process.env.api_token,
+            include: "team"
+
+        }
+
+    })));
+    let players_info = await Promise.all(promises);
+    return extractRelevantPlayerData(players_info);
+
 }
 
-exports.getPlayersInfoBySingleID=getPlayersInfoBySingleID;
+exports.getPlayersInfoBySingleID = getPlayersInfoBySingleID;
 exports.sortPlayersByName = sortPlayersByName;
 exports.getPlayerbyName = getPlayerbyName;
 exports.getPlayersByTeam = getPlayersByTeam;
